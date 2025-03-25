@@ -1,4 +1,4 @@
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 void	string_handler(int pid, char *str)
 {
@@ -35,6 +35,7 @@ void	handle_signal(int sig, siginfo_t *info, void *context)
 		string_handler(server_pid, NULL);
 	if (sig == SIGUSR2)
 	{
+		write(1, "message received!\n", 18);
 		exit(EXIT_SUCCESS);
 	}
 }
