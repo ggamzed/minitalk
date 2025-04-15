@@ -1,4 +1,54 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   server.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gdemirci <kullaniciAdi@student.42kocaeli.  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/26 19:34:24 by gdemirci          #+#    #+#             */
+/*   Updated: 2025/03/26 19:34:26 by gdemirci         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minitalk.h"
+
+void	ft_putnbr(int n)
+{
+	unsigned int	nb;
+	unsigned char	chr;
+
+	nb = n;
+	if (nb >= 10)
+	{
+		ft_putnbr(nb / 10);
+		ft_putnbr(nb % 10);
+	}
+	if (nb < 10)
+	{
+		chr = nb + 48;
+		write(1, &chr, 1);
+	}
+}
+
+void	send_signal(int pid, int sig_val)
+{
+	if (sig_val == 0)
+	{
+		if (kill(pid, SIGUSR1) == -1)
+		{
+			write (1, "KILL interrupted!\n", 18);
+			exit(EXIT_FAILURE);
+		}
+	}
+	if (sig_val == 1)
+	{
+		if (kill(pid, SIGUSR2) == -1)
+		{
+			write (1, "KILL interrupted!\n", 18);
+			exit(EXIT_FAILURE);
+		}
+	}
+}
 
 void	signal_handler(int sig, siginfo_t *info, void *context)
 {
@@ -39,7 +89,10 @@ int	main(void)
 	pid = getpid();
 	if ((sigaction(SIGUSR1, &signal_action, NULL) == -1)
 		|| (sigaction(SIGUSR2, &signal_action, NULL) == -1))
-		ft_handle_error(1);
+	{
+		write (1, "SIGACTION interrupted!\n", 23);
+		exit(EXIT_FAILURE);
+	}
 	write(1, "PID: ", 5);
 	ft_putnbr(pid);
 	write(1, "\n", 1);

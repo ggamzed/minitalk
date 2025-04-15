@@ -1,44 +1,38 @@
-SRCS_CLIENT	=			client.c utils.c
-SRCS_SERVER	=			server.c utils.c
-SRCS_CLIENT_BONUS =		client_bonus.c utils_bonus.c
-SRCS_SERVER_BONUS =		server_bonus.c utils_bonus.c
+NAME	= minitalk
+BONUS_NAME = minitalk_bonus
+SERVER	= server
+CLIENT	= client
+BONUS_SERVER = server_bonus
+BONUS_CLIENT = client_bonus
+CC		= cc
+CFLAGS	= -Wall -Wextra -Werror
+RM		= rm -f
 
-OBJS_CLIENT	=			$(SRCS_CLIENT:.c=.o)
-OBJS_SERVER	=			$(SRCS_SERVER:.c=.o)
-OBJS_CLIENT_BONUS =		$(SRCS_CLIENT_BONUS:.c=.o)
-OBJS_SERVER_BONUS =		$(SRCS_SERVER_BONUS:.c=.o)
+all: $(NAME)
 
-CC			=			gcc
-RM			=			rm -f
-CFLAGS		=			-Wall -Wextra -Werror
+$(NAME): $(SERVER) $(CLIENT)
 
-NAME_CLIENT	=			client
-NAME_SERVER	=			server
-NAME_BONUS_CLIENT	=	client_bonus
-NAME_BONUS_SERVER	=	server_bonus
+$(SERVER): server.c minitalk.h
+	$(CC) $(CFLAGS) server.c -o $(SERVER)
 
-all:					$(NAME_CLIENT) $(NAME_SERVER)
+$(CLIENT): client.c minitalk.h
+	$(CC) $(CFLAGS) client.c -o $(CLIENT)
 
-$(NAME_CLIENT):			$(OBJS_CLIENT)
-					$(CC) $(CFLAGS) $(OBJS_CLIENT) -o $(NAME_CLIENT)
+bonus: $(BONUS_NAME)
 
-$(NAME_SERVER):			$(OBJS_SERVER)
-					$(CC) $(CFLAGS) $(OBJS_SERVER) -o $(NAME_SERVER)
+$(BONUS_NAME): $(BONUS_SERVER) $(BONUS_CLIENT)
 
-bonus:					$(NAME_BONUS_CLIENT) $(NAME_BONUS_SERVER)
+$(BONUS_SERVER): server_bonus.c minitalk_bonus.h
+	$(CC) $(CFLAGS) server_bonus.c -o $(BONUS_SERVER)
 
-$(NAME_BONUS_CLIENT):	$(OBJS_CLIENT_BONUS)
-					$(CC) $(CFLAGS) $(OBJS_CLIENT_BONUS) -o $(NAME_BONUS_CLIENT)
-
-$(NAME_BONUS_SERVER):	$(OBJS_SERVER_BONUS)
-					$(CC) $(CFLAGS) $(OBJS_SERVER_BONUS) -o $(NAME_BONUS_SERVER)
+$(BONUS_CLIENT): client_bonus.c minitalk_bonus.h
+	$(CC) $(CFLAGS) client_bonus.c -o $(BONUS_CLIENT)
 
 clean:
-					$(RM) $(OBJS_CLIENT) $(OBJS_SERVER) $(OBJS_CLIENT_BONUS) $(OBJS_SERVER_BONUS)
+	$(RM) $(SERVER) $(CLIENT) $(BONUS_SERVER) $(BONUS_CLIENT)
 
-fclean:	clean
-					$(RM) $(NAME_CLIENT) $(NAME_SERVER) $(NAME_BONUS_CLIENT) $(NAME_BONUS_SERVER)
+fclean: clean
 
-re:		fclean all
+re: fclean all
 
-.PHONY:	all clean fclean re bonus
+.PHONY: all clean fclean re bonus

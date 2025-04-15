@@ -1,4 +1,68 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gdemirci <kullaniciAdi@student.42kocaeli.  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/26 19:33:36 by gdemirci          #+#    #+#             */
+/*   Updated: 2025/03/26 19:33:39 by gdemirci         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minitalk.h"
+
+int	ft_new_atoi(char *str)
+{
+	int	i;
+	int	nb;
+
+	i = 0;
+	nb = 0;
+	while (str[i])
+	{
+		if ('0' <= str[i] && str[i] <= '9')
+		{
+			nb = (nb * 10) + (str[i] - '0');
+			i++;
+		}
+		else
+		{
+			write(1, "PID is not valid!\n", 18);
+			exit(EXIT_FAILURE);
+		}
+	}
+	if (nb < 2)
+	{
+		write(1, "PID is not valid!\n", 18);
+		exit(EXIT_FAILURE);
+	}
+	return (nb);
+}
+
+void	send_signal(int pid, int sig_val)
+{
+	static int	i = 0;
+
+	if (sig_val == -1 && ++i <= 8)
+		sig_val = 0;
+	if (sig_val == 0)
+	{
+		if (kill(pid, SIGUSR1) == -1)
+		{
+			write (1, "KILL interrupted!\n", 18);
+			exit(EXIT_FAILURE);
+		}
+	}
+	if (sig_val == 1)
+	{
+		if (kill(pid, SIGUSR2) == -1)
+		{
+			write (1, "KILL interrupted!\n", 18);
+			exit(EXIT_FAILURE);
+		}
+	}
+}
 
 void	string_handler(int pid, char *str)
 {
@@ -48,9 +112,15 @@ int	main(int argc, char *argv[])
 	sigemptyset(&signal_action.sa_mask);
 	if ((sigaction(SIGUSR1, &signal_action, NULL) == -1)
 		|| (sigaction(SIGUSR2, &signal_action, NULL) == -1))
-		ft_handle_error(1);
+	{
+		write (1, "SIGACTION interrupted!\n", 23);
+		exit(EXIT_FAILURE);
+	}
 	if (argc != 3)
-		ft_handle_error(3);
+	{
+		write(1, "Incorrect form! Format: ./client <PID> <String>\n", 48);
+		exit(EXIT_FAILURE);
+	}
 	string_handler(ft_new_atoi(argv[1]), argv[2]);
 	while (1)
 		pause();
