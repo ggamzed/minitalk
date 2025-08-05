@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minitalk_bonus.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdemirci <kullaniciAdi@student.42kocaeli.  +#+  +:+       +#+        */
+/*   By: gdemirci <gdemirci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 19:34:00 by gdemirci          #+#    #+#             */
-/*   Updated: 2025/03/26 19:34:02 by gdemirci         ###   ########.fr       */
+/*   Updated: 2025/08/05 16:40:27 by gdemirci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

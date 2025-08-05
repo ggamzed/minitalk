@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdemirci <kullaniciAdi@student.42kocaeli.  +#+  +:+       +#+        */
+/*   By: gdemirci <gdemirci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 19:33:20 by gdemirci          #+#    #+#             */
-/*   Updated: 2025/03/26 19:33:23 by gdemirci         ###   ########.fr       */
+/*   Updated: 2025/08/05 16:40:01 by gdemirci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
